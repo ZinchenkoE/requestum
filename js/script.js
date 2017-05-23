@@ -1,9 +1,11 @@
 var app = {
     activePage: 1,
     nextProducts: null,
+    showNextProducts: false,
     getProducts: function() {
         app.activePage++;
         $.get('/list.php?page=' + app.activePage, function(res) {
+            $('#preloader').hide();
             try{
                 app.nextProducts = JSON.parse(res);
                 if(app.nextProducts && app.nextProducts.entities.length){
@@ -40,18 +42,29 @@ var app = {
             '</li>';
         });
         $(html).appendTo('.productBox');
+        if(app.showNextProducts) {
+            app.showNextProducts = false;
+            setTimeout(app.showHiddenProduct , 200);
+        }
+    },
+    showHiddenProduct: function() {
+        $('.productBox .product.hide').removeClass('hide');
     },
     init: function() {
         $(document).ready(function() {
             app.getProducts();
         });
         $('.more').on('click', function() {
-            $('.productBox .product.hide').removeClass('hide');
-            if(
-                app.nextProducts && app.nextProducts.total &&
-                $('.productBox .product').length >= app.nextProducts.total
-            ) $('button.more').hide();
-            else app.getProducts();
+            app.showHiddenProduct();
+            if(app.nextProducts == null){
+                $('#preloader').show();
+                app.showNextProducts = true;
+                app.getProducts();
+            }else if($('.productBox .product').length >= app.nextProducts.total){
+                $('button.more').hide();
+            } else{
+                app.getProducts();
+            }
         });
     }
 };

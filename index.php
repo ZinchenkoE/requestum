@@ -95,7 +95,7 @@
 			<h2>Footer</h2>
 		</div>
     </footer>
-	<div id="gg"></div>
+    <?php require __DIR__ . "/preloader.php";?>
 	<script src="/js/jquery-3.1.1.min.js"></script>
 	<script src="/js/script.js"></script>
 </body>
