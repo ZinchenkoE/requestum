@@ -221,7 +221,7 @@ main {
   min-height: calc(100vh - 100px); }
 
 .container {
-  width: 1240px;
+  max-width: 1240px;
   margin: 0 auto; }
 
 header {
@@ -234,7 +234,8 @@ header, footer {
   height: 50px; }
   header h2, footer h2 {
     line-height: 50px;
-    color: #fff; }
+    color: #fff;
+    padding: 0 10px; }
 
 button {
   height: 36px;
